@@ -149,4 +149,9 @@ public class Algorithm {
     }
   }
 
+  @Override
+  public String toString() {
+    return "Algorithm{" + "nodesAmount=" + nodesAmount + '}';
+  }
+
 }
