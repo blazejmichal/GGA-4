@@ -22,6 +22,9 @@ public class TreeBuilder {
     this.build();
   }
 
+  /**
+   * Budowanie drzewa na podstawie danych wejsciowych przypisanych do pól.
+   */
   public void build(
   ) {
     while (this.numbers.size() != this.size) {
@@ -38,6 +41,9 @@ public class TreeBuilder {
     }
   }
 
+  /**
+   * Rekurencyjne wypelnianie poddrzew na zasadzie losowosci.
+   */
   public void fillNode(
       Node node
   ) {
@@ -72,17 +78,21 @@ public class TreeBuilder {
     }
   }
 
+  /**
+   * Pobieranie wartosci dla node'a z drzewa.
+   */
   public int pickFromNumbers(
-
   ) {
-//    try {
-      int number = this.numbers.stream().findFirst().get();
-      this.numbers.remove(Iterables.get(this.numbers, 0));
-      return number;
-//    } catch (Exception e) {
-//      System.out.println("test");
-//      return 0;
-//    }
+    int number = this.numbers
+        .stream()
+        .findFirst()
+        .get();
+    this.numbers.remove(
+        Iterables.get(
+            this.numbers,
+            0)
+    );
+    return number;
   }
 
 }
