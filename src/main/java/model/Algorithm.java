@@ -1,9 +1,7 @@
 package model;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,10 +11,10 @@ public class Algorithm {
       Node root,
       Map<Node, Integer> tree
   ) {
-    // Obsługa gdy dany korzeń od którego liczymy jest nullem
-    if (root == null) {
-      return 0;
-    }
+//    // Obsługa gdy dany korzeń od którego liczymy jest nullem
+//    if (root == null) {
+//      return 0;
+//    }
     // Jeśli dany korzeń był już przeliczany to ta wartość zostanie przywołana
     if (tree.get(root) != null) {
       return tree.get(root);
