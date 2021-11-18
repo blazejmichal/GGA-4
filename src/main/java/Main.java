@@ -6,9 +6,14 @@ public class Main {
   public static void main(
       String[] args
   ) {
+    TreeBuilder tree10 = new TreeBuilder(10);
     TreeBuilder tree1000 = new TreeBuilder(1000);
     TreeBuilder tree100000 = new TreeBuilder(100000);
     TreeBuilder tree10000000 = new TreeBuilder(10000000);
+    Algorithm task10 = new Algorithm(
+        tree10.getSize(),
+        tree10.getRoot()
+    );
     Algorithm task1000 = new Algorithm(
         tree1000.getSize(),
         tree1000.getRoot()
