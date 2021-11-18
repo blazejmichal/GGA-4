@@ -17,16 +17,18 @@ public class Main {
     root.getRight().getLeft().setRight(new Node(8));
     Map<Node, Integer> map = Maps.newLinkedHashMap();
     Algorithm algorithm = new Algorithm();
-    System.out.println("The size of a maximum independent set is " +
-        algorithm.run(root, map));
+//    System.out.println("The size of a maximum independent set is " +
+//        algorithm.run(root, map));
+        algorithm.run(root);
 
     TreeBuilder treeBuilder = new TreeBuilder(100000);
     Algorithm task1000000 = new Algorithm();
     Map<Node, Integer> tree10000000 = Maps.newLinkedHashMap();
-    System.out.println("The size of a maximum independent set is " + task1000000.run(
-        treeBuilder.getRoot(),
-        tree10000000
-    ));
+//    System.out.println("The size of a maximum independent set is " + task1000000.run(
+//        treeBuilder.getRoot(),
+//        tree10000000
+//    ));
+    task1000000.run(treeBuilder.getRoot());
     System.out.println("end");
   }
 
