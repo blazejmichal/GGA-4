@@ -3,12 +3,8 @@ package model;
 import com.google.common.collect.Sets;
 import java.util.Collections;
 import java.util.Set;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class Algorithm {
 
