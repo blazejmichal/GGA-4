@@ -15,7 +15,7 @@ public class TreeBuilder {
 
   private int size;
   private Set<Integer> numbers = Sets.newLinkedHashSet();
-  private NodeTwo root;
+  private Node root;
 
   public TreeBuilder(int size) {
     this.size = size;
@@ -29,7 +29,7 @@ public class TreeBuilder {
           random.nextInt()
       );
     }
-    this.root = new NodeTwo(
+    this.root = new Node(
         this.pickFromNumbers()
     );
     while (!this.numbers.isEmpty()) {
@@ -37,7 +37,7 @@ public class TreeBuilder {
     }
   }
 
-  public void fillNode(NodeTwo node) {
+  public void fillNode(Node node) {
 
     if (this.numbers.isEmpty()) {
       return;
@@ -45,7 +45,7 @@ public class TreeBuilder {
     Random random = new Random();
     if (random.nextBoolean()) {
       if (node.getLeft() == null) {
-        NodeTwo leftNode = new NodeTwo(
+        Node leftNode = new Node(
             this.pickFromNumbers()
         );
         node.setLeft(leftNode);
@@ -59,7 +59,7 @@ public class TreeBuilder {
     }
     if (random.nextBoolean()) {
       if (node.getRight() == null) {
-        NodeTwo rightNode = new NodeTwo(
+        Node rightNode = new Node(
             this.pickFromNumbers()
         );
         node.setRight(rightNode);
