@@ -1,8 +1,11 @@
 package model;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Algorithm {
 
@@ -18,41 +21,62 @@ public class Algorithm {
     if (tree.get(root) != null) {
       return tree.get(root);
     }
-    List<Node> maximalIndependentSetWithoutCurrentRoot = Lists.newLinkedList();
-    maximalIndependentSetWithoutCurrentRoot.add(
-        root.getLeft()
-    );
-    maximalIndependentSetWithoutCurrentRoot.add(
-        root.getRight()
-    );
-    int maximalIndependentSetWithoutCurrentRootSize =
-        this.run(root.getLeft(), tree) + this.run(root.getRight(), tree);
-    int maximalIndependentSetWithCurrentRootSize = 1;
-    List<Node> maximalIndependentSetWithCurrentRoot = Lists.newLinkedList();
+    int setWithoutCurrentRootSize = 0;
+    Set<Node> setWithoutCurrentRoot = Sets.newLinkedHashSet();
     if (root.getLeft() != null) {
-      maximalIndependentSetWithCurrentRootSize += this.run(root.getLeft().getLeft(), tree)
-          + this.run(root.getLeft().getRight(), tree);
-      maximalIndependentSetWithCurrentRoot.add(root.getLeft().getLeft());
-      maximalIndependentSetWithCurrentRoot.add(root.getLeft().getRight());
+      setWithoutCurrentRootSize = setWithoutCurrentRootSize + this.run(root.getLeft(), tree);
+      setWithoutCurrentRoot.addAll(
+          root.getLeft().getIndependentSet()
+      );
     }
     if (root.getRight() != null) {
-      maximalIndependentSetWithCurrentRootSize += this.run(root.getRight().getLeft(), tree)
-          + this.run(root.getRight().getRight(), tree);
-      maximalIndependentSetWithCurrentRoot.add(root.getRight().getLeft());
-      maximalIndependentSetWithCurrentRoot.add(root.getRight().getRight());
+      setWithoutCurrentRootSize = setWithoutCurrentRootSize + this.run(root.getRight(), tree);
+      setWithoutCurrentRoot.addAll(
+          root.getRight().getIndependentSet()
+      );
     }
-    if (maximalIndependentSetWithCurrentRootSize > maximalIndependentSetWithoutCurrentRootSize) {
+    int setWithCurrentRootSize = 1;
+    Set<Node> setWithCurrentRoot = Sets.newLinkedHashSet();
+    setWithCurrentRoot.add(root);
+    if (root.getLeft() != null) {
+      if (root.getLeft().getLeft() != null) {
+        setWithCurrentRootSize += this.run(root.getLeft().getLeft(), tree);
+        setWithCurrentRoot.addAll(root.getLeft().getLeft().getIndependentSet());
+      }
+      if (root.getLeft().getRight() != null) {
+        setWithCurrentRootSize += this.run(root.getLeft().getRight(), tree);
+        setWithCurrentRoot.addAll(root.getLeft().getRight().getIndependentSet());
+      }
+    }
+    if (root.getRight() != null) {
+      if (root.getRight().getLeft() != null) {
+        setWithCurrentRootSize += this.run(root.getRight().getLeft(), tree);
+        setWithCurrentRoot.addAll(root.getRight().getLeft().getIndependentSet());
+      }
+      if (root.getRight().getRight() != null) {
+        setWithCurrentRootSize += this.run(root.getRight().getRight(), tree);
+        setWithCurrentRoot.addAll(root.getRight().getRight().getIndependentSet());
+      }
+    }
+    setWithoutCurrentRoot.removeAll(Collections.singleton(null));
+    if (setWithCurrentRootSize != setWithCurrentRoot.size()
+        || setWithoutCurrentRootSize
+        != setWithoutCurrentRoot.size()
+    ) {
+      System.out.println();
+    }
+    if (setWithCurrentRootSize > setWithoutCurrentRootSize) {
       root.addToIndependentSet(
-          maximalIndependentSetWithCurrentRoot
+          setWithCurrentRoot
       );
       root.getIndependentSet().add(root);
     } else {
       root.addToIndependentSet(
-          maximalIndependentSetWithoutCurrentRoot
+          setWithoutCurrentRoot
       );
     }
-    tree.put(root, Integer.max(maximalIndependentSetWithoutCurrentRootSize,
-        maximalIndependentSetWithCurrentRootSize));
+    tree.put(root, Integer.max(setWithoutCurrentRootSize,
+        setWithCurrentRootSize));
     return tree.get(root);
   }
 

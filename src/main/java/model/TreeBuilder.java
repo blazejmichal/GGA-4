@@ -22,7 +22,8 @@ public class TreeBuilder {
     this.build();
   }
 
-  public void build() {
+  public void build(
+  ) {
     while (this.numbers.size() != this.size) {
       Random random = new Random();
       this.numbers.add(
@@ -37,8 +38,9 @@ public class TreeBuilder {
     }
   }
 
-  public void fillNode(Node node) {
-
+  public void fillNode(
+      Node node
+  ) {
     if (this.numbers.isEmpty()) {
       return;
     }
@@ -70,15 +72,17 @@ public class TreeBuilder {
     }
   }
 
-  public int pickFromNumbers() {
-    try {
+  public int pickFromNumbers(
+
+  ) {
+//    try {
       int number = this.numbers.stream().findFirst().get();
       this.numbers.remove(Iterables.get(this.numbers, 0));
       return number;
-    } catch (Exception e) {
-      System.out.println("test");
-      return 0;
-    }
+//    } catch (Exception e) {
+//      System.out.println("test");
+//      return 0;
+//    }
   }
 
 }

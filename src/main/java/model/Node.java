@@ -44,7 +44,7 @@ public class Node {
     }
   }
 
-  public void addToIndependentSet(List<Node> nodes) {
+  public void addToIndependentSet(Set<Node> nodes) {
     for (Node node : nodes) {
       this.addToIndependentSet(node);
     }
