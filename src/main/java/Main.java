@@ -8,10 +8,12 @@ public class Main {
       String[] args
   ) {
     Algorithm example1 = new Algorithm(
-        new Example1().build()
+        new Example1().build(),
+        7
     );
     Algorithm example2 = new Algorithm(
-        new Example2().build()
+        new Example2().build(),
+        13
     );
 //    TreeBuilderBinary tree10 = new TreeBuilderBinary(10);
 //    TreeBuilderBinary tree1000 = new TreeBuilderBinary(1000);
