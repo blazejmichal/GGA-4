@@ -1,7 +1,8 @@
 package model;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,71 +14,24 @@ import lombok.NoArgsConstructor;
 public class Node {
 
   private int value;
-  private Node left;
-  private Node right;
+  private List<Node> children = Lists.newArrayList();
   private Set<Node> independentSet = Sets.newLinkedHashSet();
+  private Integer independentSetSize = 0;
 
-  public Node(int value) {
+  public Node(
+      int value
+  ) {
     this.value = value;
   }
 
-  public void setLeft(Node left) {
-    this.left = left;
-  }
-
-  public void setRight(
-      Node right
+  public Boolean addChild(
+      Node child
   ) {
-    this.right = right;
-  }
-
-  public void addToIndependentSet(
-      Node node
-  ) {
-    if (
-        node != null
-    ) {
-      if (
-          this.independentSet == null
-      ) {
-        this.independentSet = Sets.newLinkedHashSet();
-      }
-      this.independentSet.addAll(
-          node.getIndependentSet()
-      );
+    if (this.children == null) {
+      this.children = Lists.newLinkedList();
     }
-  }
-
-  public void addToIndependentSet(
-      Set<Node> nodes
-  ) {
-    for (Node node : nodes) {
-      this.addToIndependentSet(
-          node
-      );
-    }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Node nodeTwo = (Node) o;
-    return value == nodeTwo.value;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(value);
-  }
-
-  @Override
-  public String toString() {
-    return "Node{" + "value=" + value + '}';
+    this.getChildren().add(child);
+    return Boolean.TRUE;
   }
 
 }

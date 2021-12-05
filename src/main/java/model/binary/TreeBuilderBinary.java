@@ -1,4 +1,4 @@
-package model;
+package model.binary;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TreeBuilder {
+public class TreeBuilderBinary {
 
   private int size;
   private Set<Integer> numbers = Sets.newLinkedHashSet();
-  private Node root;
+  private NodeBinary root;
 
-  public TreeBuilder(int size) {
+  public TreeBuilderBinary(int size) {
     this.size = size;
     this.build();
   }
@@ -34,7 +34,7 @@ public class TreeBuilder {
           random.nextInt()
       );
     }
-    this.root = new Node(
+    this.root = new NodeBinary(
         this.pickFromNumbers()
     );
     while (!this.numbers.isEmpty()) {
@@ -46,7 +46,7 @@ public class TreeBuilder {
    * Rekurencyjne wypelnianie poddrzew na zasadzie losowosci.
    */
   public void fillNode(
-      Node node
+      NodeBinary node
   ) {
     if (this.numbers.isEmpty()) {
       return;
@@ -54,7 +54,7 @@ public class TreeBuilder {
     Random random = new Random();
     if (random.nextBoolean()) {
       if (node.getLeft() == null) {
-        Node leftNode = new Node(
+        NodeBinary leftNode = new NodeBinary(
             this.pickFromNumbers()
         );
         node.setLeft(leftNode);
@@ -68,7 +68,7 @@ public class TreeBuilder {
     }
     if (random.nextBoolean()) {
       if (node.getRight() == null) {
-        Node rightNode = new Node(
+        NodeBinary rightNode = new NodeBinary(
             this.pickFromNumbers()
         );
         node.setRight(rightNode);
