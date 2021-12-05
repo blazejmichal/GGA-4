@@ -23,6 +23,7 @@ public class Algorithm {
     long start = System.currentTimeMillis();
     this.maximalIndependentSetSize = this.run(this.root);
     this.timeInMilliseconds = System.currentTimeMillis() - start;
+    this.maximalIndependentSet = this.root.getIndependentSet();
   }
 
   public int run(
@@ -35,28 +36,21 @@ public class Algorithm {
       node.getIndependentSet().add(node);
       return node.getIndependentSet().size();
     }
-
     int childSum = 0;
     int grandchildSum = 0;
-
     for (Node child : node.getChildren()) {
       childSum += this.run(child);
       for (Node grandChild : child.getChildren()) {
         grandchildSum += this.run(grandChild);
       }
-//      grandchildSum += child.getChildren().stream()
-//                            .reduce(0, (subtotal, grandChild) -> subtotal.getIndependentSet().size()
-//                                + this.run(grandChild));
-//                            .reduce(grandChild -> this.run(grandChild), 0);
-
     }
-//    node.getChildren().forEach(child -> {
-//      childSum += this.run(child);
-//      grandchildSum += child.getChildren().stream().reduce((p, c) -> p + this.run(c), 0);
-//    })
-
     int result = Math.max(grandchildSum + 1, childSum);
-//    if(grandchildSum +1 > )
+    if (grandchildSum + 1 > childSum) {
+      node.addIndependentSetNode(node);
+    }
+    node.addIndependentSetNodes(
+        node.getChildrenIndependentSet()
+    );
     node.setIndependentSetSize(result);
     return result;
   }
