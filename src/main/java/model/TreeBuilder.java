@@ -2,6 +2,7 @@ package model;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -83,16 +84,18 @@ public class TreeBuilder {
    */
   public int pickFromNumbers(
   ) {
-    int number = this.numbers
+    Optional<Integer> number = this.numbers
         .stream()
-        .findFirst()
-        .get();
+        .findFirst();
+    if (!number.isPresent()) {
+      System.out.println();
+    }
     this.numbers.remove(
         Iterables.get(
             this.numbers,
             0)
     );
-    return number;
+    return number.get();
   }
 
 }
