@@ -1,4 +1,5 @@
 import model.Algorithm;
+import model.TreeBuilder;
 import model.example.Example1;
 import model.example.Example2;
 
@@ -14,6 +15,18 @@ public class Main {
     Algorithm example2 = new Algorithm(
         new Example2().build(),
         13
+    );
+    Algorithm task1000 = new Algorithm(
+        new TreeBuilder(1000).getRoot(),
+        1000
+    );
+    Algorithm task100000 = new Algorithm(
+        new TreeBuilder(100000).getRoot(),
+        100000
+    );
+    Algorithm task10000000 = new Algorithm(
+        new TreeBuilder(10000000).getRoot(),
+        10000000
     );
 //    TreeBuilderBinary tree10 = new TreeBuilderBinary(10);
 //    TreeBuilderBinary tree1000 = new TreeBuilderBinary(1000);
