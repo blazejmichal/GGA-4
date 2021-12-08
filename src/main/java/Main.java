@@ -28,6 +28,7 @@ public class Main {
         new TreeBuilder(10000000).getRoot(),
         10000000
     );
+
 //    TreeBuilderBinary tree10 = new TreeBuilderBinary(10);
 //    TreeBuilderBinary tree1000 = new TreeBuilderBinary(1000);
 //    TreeBuilderBinary tree100000 = new TreeBuilderBinary(100000);

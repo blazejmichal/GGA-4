@@ -1,7 +1,9 @@
 package model;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -17,11 +19,14 @@ public class TreeBuilder {
   private int size;
   private Set<Integer> numbers = Sets.newLinkedHashSet();
   private Node root;
+  private List<Node> iterationToFill = Lists.newLinkedList();
+  private Integer divider;
 
   public TreeBuilder(
       int size
   ) {
     this.size = size;
+    this.divider = this.initializeDivider();
     this.build();
   }
 
@@ -39,13 +44,41 @@ public class TreeBuilder {
     this.root = new Node(
         this.pickFromNumbers()
     );
+    Node left = new Node(
+        this.pickFromNumbers()
+    );
+    Node right = new Node(
+        this.pickFromNumbers()
+    );
+    this.root.addChild(left);
+    this.root.addChild(right);
+    this.iterationToFill.add(left);
+    this.iterationToFill.add(right);
     while (!this.numbers.isEmpty()) {
-      this.fillNode(this.root);
+      this.fillIteration();
     }
   }
 
   /**
-   * Rekurencyjne wypelnianie poddrzew na zasadzie losowosci.
+   * Wypełnianiamy węzły z danej wysokości (łącznie z każdej wysokości). Główna funkcja to
+   * urozmaicenie drzewa.
+   */
+  private void fillIteration(
+  ) {
+    List<Node> newIterationToFill = Lists.newLinkedList();
+    for (Node node : this.iterationToFill) {
+      this.fillNode(node);
+      newIterationToFill.addAll(
+          node.getChildren()
+      );
+    }
+    if (!newIterationToFill.isEmpty()) {
+      this.iterationToFill = newIterationToFill;
+    }
+  }
+
+  /**
+   * Wypelnianie węzła dziećmi na zasadzie losowosci.
    */
   public void fillNode(
       Node node
@@ -58,9 +91,9 @@ public class TreeBuilder {
     if (stop) {
       return;
     }
-    Integer childrenAmount = random.nextInt(
-        this.numbers.size() + 1
-    );
+    Integer childrenAmount = this.numbers.size() > this.divider
+        ? (random.nextInt(this.numbers.size() + 1) / this.divider)
+        : 2;
     for (int i = 0; i < childrenAmount; i++) {
       if (this.numbers.isEmpty()) {
         return;
@@ -70,8 +103,19 @@ public class TreeBuilder {
       );
       node.addChild(child);
     }
-    for (Node child : node.getChildren()) {
-      this.fillNode(child);
+  }
+
+  // Wartosc do dzielenia przy ustalaniu ilosci dzieci węzła. Główna funkcja to "urozmaicenie" drzewa/ilości gałęzi
+  public int initializeDivider(
+  ) {
+    if (this.size == 1000) {
+      return 100;
+    } else if (this.size == 100000) {
+      return 1000;
+    } else if (this.size == 10000000) {
+      return 10000;
+    } else {
+      return 10;
     }
   }
 
